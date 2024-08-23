@@ -46,4 +46,4 @@ Web application to sell online courses
    -  Purchasing course
    -  Q&A
    -  Course review
-   -  Course recommendation using A
+   -  Course recommendation using AI
