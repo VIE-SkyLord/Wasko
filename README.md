@@ -39,7 +39,25 @@ Web application to sell online courses
         * Validate Uploaded Files: Check and filter uploaded files to ensure they do not contain malicious code or other threats.
         * Limit File Types and Sizes: Restrict the types and sizes of uploaded files to reduce the risk of attacks.
    -  Sign in
+     + Use Email or Phone Number for Login
+     + Enable Social Login Options
+     + Implement Two-Factor Authentication (2FA)
+     + Password Recovery Feature
+     + Encourage Strong Passwords and Password Management
+     + User-Friendly Login Interface
+     + Security Notifications and Alerts
+     + Regular Security Audits
    -  Sign up
+     + Register with Email or Phone Number
+     + Offer Social Sign-Up Options
+     + Simplify the Registration Form
+     + Use Strong Passwords and Password Security Checks
+     + Privacy Policy and Terms of Service
+     + CAPTCHA or Bot Detection
+     + Post-Registration Two-Factor Authentication (2FA)
+     + Send a Welcome Email/SMS
+     + Support Features When Needed
+     + Monitoring and Analytics
    -  Edit personal profile
    -  Account recovery
    -  Create & sell courses
