@@ -59,6 +59,16 @@ Web application to sell online courses
         + Support Features When Needed
         + Monitoring and Analytics
    -  Edit personal profile
+        + Simple and Intuitive User Interface
+        + Edit and Save Changes
+        + Validation and Feedback
+        + Profile Picture Upload
+        + Security Settings
+        + Privacy Controls
+        + Change Email or Phone Number
+        + Data Backup and Restore
+        + Accessibility and Localization
+        + Audit Logs and History
    -  Account recovery
    -  Create & sell courses
    -  Purchasing course
