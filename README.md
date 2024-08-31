@@ -70,6 +70,17 @@ Web application to sell online courses
         + Accessibility and Localization
         + Audit Logs and History
    -  Account recovery
+        + Email or Phone Number Recovery
+        + Security Questions (Optional)
+        + Two-Factor Authentication (2FA)
+        + Recovery via Backup Codes
+        + Account Recovery via Social Accounts
+        + Self-Service Password Reset
+        + Alternate Email Address or Recovery Contact
+        + Verification of Identity for High-Security Accounts
+        + Notification of Account Recovery Attempts
+        + User Support and Help Desk
+        + Clear Recovery Instructions
    -  Create & sell courses
    -  Purchasing course
    -  Q&A
