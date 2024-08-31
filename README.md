@@ -82,6 +82,16 @@ Web application to sell online courses
         + User Support and Help Desk
         + Clear Recovery Instructions
    -  Create & sell courses
+        + Identify Your Niche and Target Audience
+        + Plan Your Course Content
+        + Choose the Right Course Format
+        + Create High-Quality Content
+        + Choose a Platform to Host Your Course
+        + Price Your Course
+        + Market Your Course
+        + Engage with Your Students
+        + Collect Feedback and Improve
+        + Scale Your Efforts
    -  Purchasing course
    -  Q&A
    -  Course review
