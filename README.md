@@ -93,6 +93,27 @@ Web application to sell online courses
         + Collect Feedback and Improve
         + Scale Your Efforts
    -  Purchasing course
+        + Define Your Learning Goals
+        + Research Courses and Platforms
+        + Read Course Descriptions and Syllabuses
+        + Check Instructor Credentials
+        + Read Reviews and Testimonials
+        + Look for Free Previews or Trial Periods
+        + Check for Certificates and Accreditation
+        + Compare Pricing and Value
+        + Consider the Learning Experience
+        + Review Refund Policies
+        + Enroll and Start Learning
    -  Q&A
+        + Choosing the Right Platform
+        + Structuring the Q&A Section
+        + Moderation and Quality Control
+        + Encouraging Participation
+        + Providing Quality Answers
+        + Incorporating Q&A into the Learning Process
+        + Analytics and Feedback
+        + Security and Privacy
+        + Leveraging Q&A for Course Improvement
+        + Documentation and Resources
    -  Course review
    -  Course recommendation using AI
