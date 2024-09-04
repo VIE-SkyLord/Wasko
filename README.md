@@ -116,4 +116,17 @@ Web application to sell online courses
         + Leveraging Q&A for Course Improvement
         + Documentation and Resources
    -  Course review
+        + Writing a Course Review as a Student
+        + Managing Course Reviews as an Instructor
+        + Using Reviews to Market Your Course
+        + Handling Fake or Inappropriate Reviews
+        + Encouraging a Culture of Feedback
    -  Course recommendation using AI
+        + Understand the Data
+        + Types of Recommendation Algorithms
+        + Building the AI Model
+        + Implementing the Recommendation System
+        + Enhancing Recommendation Accuracy
+        + Monitoring and Improving the System
+        + Ethical Considerations
+        + Examples of AI-Powered Course Recommendations
