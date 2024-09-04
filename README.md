@@ -1,132 +1,109 @@
-# Wasko
-Web application to sell online courses
-1. Functions
-   -  Data privacy
-      + Authentication and Authorization
-        * Use Strong Authentication: two-factor authentication (2FA), OAuth
-        * Proper Authorization: role-based access control (RBAC)
-      + Password Security
-        * Store Passwords Securely: bcrypt, Argon2, PBKDF2 to encrypt passwords
-        * Enforce Strong Passwords:Require strong passwords from users, including factors such as length, special characters, uppercase and lowercase letters.
-      + Protect Against SQL Injection
-        * Use Prepared Statements: Use prepared statements to interact with the database instead of constructing SQL queries directly from user input.
-        * Validate and Sanitize Input: Always validate and sanitize user input to avoid the inclusion of malicious code.
-      + Protect Against XSS
-        * Implement Encoding: Escape and encode input data when displaying it on the user interface to prevent the injection of malicious JavaScript code.
-        * Use Content Security Policy (CSP): Configure CSP to limit the sources from which the website can load and execute resources.
-      + Protect Against CSRF
-        * Use CSRF Tokens: Add CSRF tokens to POST, PUT, DELETE requests to ensure that the request originates from your application and not from other sources.
-        * Check Referrer: Verify the Referer or Origin headers in requests to confirm the source of the request.
-      + Session Management
-        * Use Secure Cookies: Set HttpOnly, Secure, and SameSite attributes for session cookies to prevent unauthorized access and protect session data.
-        * Limit Session Duration: Set expiration times for user sessions and require re-login after periods of inactivity.
-      + API Protection
-        * Authenticate APIs: Use authentication methods such as API keys or OAuth to protect APIs from unauthorized access.
-        * Restrict Access: Ensure API endpoints provide only the necessary access required for users or applications.
-      + Data Security
-        * Encrypt Data: Encrypt sensitive data such as credit card information and personal data both at rest and in transit.
-        * Regular Backups: Perform regular data backups to be able to restore data in case of incidents or attacks.
-      + Monitoring and Detection
-        * Log Activities: Log important activities and monitor logs to detect suspicious behavior or attacks.
-        * Use Monitoring Tools: Implement security monitoring tools to track and respond to security events.
-      + Secure Development Practices
-        * Conduct Security Testing: Perform regular security tests and code scans to identify vulnerabilities and weaknesses.
-        * Educate and Train: Ensure all members of the development team are trained in security practices and aware of potential threats.
-      + Use Security Libraries and Tools
-        * Utilize Secure Libraries: Choose security libraries and tools that are regularly tested and updated.
-        * Monitor Security Alerts: Subscribe to security alerts for vulnerabilities in the libraries and tools you use.
-      + Secure File Uploads
-        * Validate Uploaded Files: Check and filter uploaded files to ensure they do not contain malicious code or other threats.
-        * Limit File Types and Sizes: Restrict the types and sizes of uploaded files to reduce the risk of attacks.
-   -  Sign in
-        + Use Email or Phone Number for Login
-        + Enable Social Login Options
-        + Implement Two-Factor Authentication (2FA)
-        + Password Recovery Feature
-        + Encourage Strong Passwords and Password Management
-        + User-Friendly Login Interface
-        + Security Notifications and Alerts
-        + Regular Security Audits
-   -  Sign up
-        + Register with Email or Phone Number
-        + Offer Social Sign-Up Options
-        + Simplify the Registration Form
-        + Use Strong Passwords and Password Security Checks
-        + Privacy Policy and Terms of Service
-        + CAPTCHA or Bot Detection
-        + Post-Registration Two-Factor Authentication (2FA)
-        + Send a Welcome Email/SMS
-        + Support Features When Needed
-        + Monitoring and Analytics
-   -  Edit personal profile
-        + Simple and Intuitive User Interface
-        + Edit and Save Changes
-        + Validation and Feedback
-        + Profile Picture Upload
-        + Security Settings
-        + Privacy Controls
-        + Change Email or Phone Number
-        + Data Backup and Restore
-        + Accessibility and Localization
-        + Audit Logs and History
-   -  Account recovery
-        + Email or Phone Number Recovery
-        + Security Questions (Optional)
-        + Two-Factor Authentication (2FA)
-        + Recovery via Backup Codes
-        + Account Recovery via Social Accounts
-        + Self-Service Password Reset
-        + Alternate Email Address or Recovery Contact
-        + Verification of Identity for High-Security Accounts
-        + Notification of Account Recovery Attempts
-        + User Support and Help Desk
-        + Clear Recovery Instructions
-   -  Create & sell courses
-        + Identify Your Niche and Target Audience
-        + Plan Your Course Content
-        + Choose the Right Course Format
-        + Create High-Quality Content
-        + Choose a Platform to Host Your Course
-        + Price Your Course
-        + Market Your Course
-        + Engage with Your Students
-        + Collect Feedback and Improve
-        + Scale Your Efforts
-   -  Purchasing course
-        + Define Your Learning Goals
-        + Research Courses and Platforms
-        + Read Course Descriptions and Syllabuses
-        + Check Instructor Credentials
-        + Read Reviews and Testimonials
-        + Look for Free Previews or Trial Periods
-        + Check for Certificates and Accreditation
-        + Compare Pricing and Value
-        + Consider the Learning Experience
-        + Review Refund Policies
-        + Enroll and Start Learning
-   -  Q&A
-        + Choosing the Right Platform
-        + Structuring the Q&A Section
-        + Moderation and Quality Control
-        + Encouraging Participation
-        + Providing Quality Answers
-        + Incorporating Q&A into the Learning Process
-        + Analytics and Feedback
-        + Security and Privacy
-        + Leveraging Q&A for Course Improvement
-        + Documentation and Resources
-   -  Course review
-        + Writing a Course Review as a Student
-        + Managing Course Reviews as an Instructor
-        + Using Reviews to Market Your Course
-        + Handling Fake or Inappropriate Reviews
-        + Encouraging a Culture of Feedback
-   -  Course recommendation using AI
-        + Understand the Data
-        + Types of Recommendation Algorithms
-        + Building the AI Model
-        + Implementing the Recommendation System
-        + Enhancing Recommendation Accuracy
-        + Monitoring and Improving the System
-        + Ethical Considerations
-        + Examples of AI-Powered Course Recommendations
+
+# Ứng dụng web bán khóa học trực tuyến
+
+## 1. Bảo mật và quyền riêng tư dữ liệu
+
+### Xác thực và Phân quyền
+- **Xác thực mạnh:** Triển khai xác thực hai yếu tố (2FA) và OAuth để đảm bảo xác thực người dùng an toàn.
+- **Phân quyền đúng cách:** Sử dụng kiểm soát truy cập dựa trên vai trò (RBAC) để quản lý quyền của người dùng.
+- **Bảo mật mật khẩu:**
+  - **Lưu trữ:** Sử dụng bcrypt, Argon2 hoặc PBKDF2 để mã hóa mật khẩu an toàn.
+  - **Thực thi:** Yêu cầu mật khẩu mạnh với độ dài, ký tự đặc biệt và độ phân biệt hoa thường.
+
+### Bảo vệ chống lại các lỗ hổng phổ biến
+- **SQL Injection:**
+  - **Câu lệnh chuẩn bị:** Sử dụng câu lệnh chuẩn bị cho tương tác cơ sở dữ liệu để ngăn chặn SQL injection.
+  - **Kiểm tra đầu vào:** Kiểm tra và làm sạch dữ liệu đầu vào của người dùng để ngăn chặn mã độc.
+- **Cross-Site Scripting (XSS):**
+  - **Mã hóa đầu vào:** Escape và mã hóa dữ liệu đầu vào khi hiển thị để ngăn chặn mã JavaScript độc hại.
+  - **Chính sách Bảo mật Nội dung (CSP):** Cấu hình CSP để giới hạn nguồn tải và thực thi tài nguyên không được ủy quyền.
+- **Cross-Site Request Forgery (CSRF):**
+  - **Token CSRF:** Triển khai token CSRF cho các yêu cầu POST, PUT, DELETE để đảm bảo yêu cầu là xác thực.
+  - **Kiểm tra Referrer:** Xác minh các tiêu đề Referrer hoặc Origin để xác nhận nguồn gốc yêu cầu.
+
+### Quản lý phiên làm việc
+- **Cookie an toàn:** Cấu hình cookie với các thuộc tính HttpOnly, Secure và SameSite.
+- **Hết hạn phiên:** Đặt thời gian hết hạn cho phiên làm việc và yêu cầu đăng nhập lại sau thời gian không hoạt động.
+
+### Bảo vệ API
+- **Xác thực:** Bảo vệ API bằng các phương pháp xác thực như khóa API hoặc OAuth.
+- **Hạn chế truy cập:** Giới hạn quyền truy cập vào các điểm cuối API cho người dùng hoặc ứng dụng cần thiết.
+
+### Bảo mật dữ liệu
+- **Mã hóa:** Mã hóa dữ liệu nhạy cảm như thông tin cá nhân và thẻ tín dụng cả khi lưu trữ và khi truyền tải.
+- **Sao lưu dữ liệu:** Sao lưu dữ liệu định kỳ để đảm bảo khôi phục trong trường hợp sự cố.
+
+## 2. Giám sát và phát hiện
+- **Ghi nhật ký hoạt động:** Ghi lại các hoạt động quan trọng và theo dõi các dấu hiệu hành vi đáng ngờ.
+- **Giám sát bảo mật:** Sử dụng công cụ để theo dõi và phản ứng với các sự kiện bảo mật.
+
+## 3. Thực hành phát triển bảo mật
+- **Kiểm tra bảo mật:** Thực hiện kiểm tra bảo mật và quét mã thường xuyên.
+- **Đào tạo nhà phát triển:** Đảm bảo đội ngũ phát triển được đào tạo về bảo mật và nhận thức về các mối đe dọa.
+- **Thư viện bảo mật:** Sử dụng thư viện và công cụ bảo mật được cập nhật thường xuyên.
+- **Cảnh báo bảo mật:** Đăng ký nhận cảnh báo cho các lỗ hổng trong các công cụ và thư viện đang sử dụng.
+
+## 4. Tải tệp tin an toàn
+- **Kiểm tra:** Kiểm tra và lọc tệp tải lên để tránh nội dung độc hại.
+- **Hạn chế:** Giới hạn loại và kích thước tệp tải lên để giảm thiểu rủi ro.
+
+## 5. Tính năng tài khoản người dùng
+
+### Đăng nhập
+- Sử dụng email hoặc số điện thoại để đăng nhập.
+- Cung cấp các tùy chọn đăng nhập qua mạng xã hội.
+- Triển khai 2FA.
+- Bao gồm các tính năng khôi phục mật khẩu.
+- Đảm bảo giao diện thân thiện với người dùng và chính sách mật khẩu mạnh.
+
+### Đăng ký
+- Cho phép đăng ký bằng email hoặc số điện thoại.
+- Cung cấp các tùy chọn đăng ký qua mạng xã hội.
+- Đơn giản hóa quy trình đăng ký.
+- Bao gồm CAPTCHA hoặc phát hiện bot.
+- Thực thi 2FA sau đăng ký và gửi email/SMS chào mừng.
+
+### Chỉnh sửa hồ sơ cá nhân
+- Cung cấp giao diện đơn giản, trực quan để chỉnh sửa hồ sơ.
+- Hỗ trợ tải lên ảnh hồ sơ, cài đặt bảo mật và quyền riêng tư.
+- Cho phép sao lưu, khôi phục dữ liệu và các tính năng hỗ trợ truy cập.
+- Duy trì nhật ký và lịch sử hoạt động.
+
+### Khôi phục tài khoản
+- Cung cấp tùy chọn khôi phục bằng email hoặc số điện thoại.
+- Hỗ trợ 2FA, mã sao lưu và khôi phục tài khoản qua mạng xã hội.
+- Cho phép tự phục hồi mật khẩu và xác minh danh tính.
+- Thông báo cho người dùng về các nỗ lực khôi phục.
+
+## 6. Quản lý khóa học
+
+### Tạo và bán khóa học
+- Xác định thị trường ngách và đối tượng mục tiêu.
+- Lập kế hoạch và tạo nội dung khóa học chất lượng cao.
+- Chọn định dạng và nền tảng phù hợp.
+- Đặt giá, tiếp thị khóa học và tương tác với học viên.
+- Thu thập phản hồi và mở rộng nỗ lực.
+
+### Mua khóa học
+- Xác định mục tiêu học tập và nghiên cứu tùy chọn.
+- Xem xét mô tả khóa học, thông tin giảng viên và nhận xét người dùng.
+- So sánh giá trị và trải nghiệm học tập.
+- Xem lại chính sách hoàn tiền trước khi đăng ký.
+
+## 7. Tương tác khóa học
+
+### Hỏi đáp (Q&A)
+- Cấu trúc phần hỏi đáp hiệu quả.
+- Kiểm duyệt nội dung và khuyến khích sự tham gia.
+- Tích hợp Q&A vào quá trình học tập và tận dụng nó để cải thiện.
+
+### Đánh giá khóa học
+- Tạo điều kiện cho học viên đánh giá khóa học và quản lý phản hồi của giảng viên.
+- Sử dụng đánh giá để tiếp thị và xử lý phản hồi không phù hợp.
+- Khuyến khích văn hóa phản hồi mang tính xây dựng.
+
+## 8. Đề xuất khóa học sử dụng AI
+- Hiểu dữ liệu và các loại thuật toán đề xuất.
+- Xây dựng, triển khai và cải thiện mô hình đề xuất AI.
+- Giám sát, cải thiện độ chính xác và xem xét các vấn đề đạo đức.
+
