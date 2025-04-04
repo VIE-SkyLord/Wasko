@@ -1,0 +1,348 @@
+@startuml "Nền tảng Khóa học Trực tuyến"
+
+' Các lớp chính
+class NguoiDung {
+  -id: int
+  -tenDangNhap: String
+  -matKhau: String
+  -email: String
+  -soDienThoai: String
+  -vaiTro: VaiTroNguoiDung
+  -soDu: double
+  +dangNhap(): boolean
+  +dangXuat(): void
+  +dangKy(): boolean
+  +rutTien(soTien: double): boolean
+}
+
+class HocVien {
+  -khoaHocDaGhiDanh: List<KhoaHoc>
+  +timKiemKhoaHoc(tuKhoa: String): List<KhoaHoc>
+  +xemChiTietKhoaHoc(maKhoaHoc: int): KhoaHoc
+  +ghiDanhKhoaHoc(maKhoaHoc: int): boolean
+  +xemKhoaHocDaGhiDanh(): List<KhoaHoc>
+  +truyCapTaiLieuHocTap(maKhoaHoc: int): List<TaiLieuHocTap>
+  +guiDanhGia(maKhoaHoc: int, diemDanhGia: int, binhLuan: String): boolean
+  +xemTienTrinh(maKhoaHoc: int): TienTrinhKhoaHoc
+  +xemBaiHoc(maBaiHoc: int): BaiHoc
+  +hoanThanhBaiHoc(maBaiHoc: int): boolean
+  +lamBaiKiemTra(maBaiKiemTra: int): boolean
+  +nhanChungChi(maKhoaHoc: int): ChungChi
+}
+
+class GiangVien {
+  -khoaHocDaTao: List<KhoaHoc>
+  -tyLeLoiNhuan: double
+  +taoKhoaHoc(khoaHoc: KhoaHoc): boolean
+  +capNhatKhoaHoc(maKhoaHoc: int, khoaHoc: KhoaHoc): boolean
+  +taiLenTaiLieuHocTap(maKhoaHoc: int, taiLieu: TaiLieuHocTap): boolean
+  +xemTienTrinhHocVien(maKhoaHoc: int): List<TienTrinhKhoaHoc>
+  +quanLyNoiDungKhoaHoc(maKhoaHoc: int): boolean
+  +taoBaiHoc(maKhoaHoc: int, baiHoc: BaiHoc): boolean
+  +capNhatBaiHoc(maBaiHoc: int, baiHoc: BaiHoc): boolean
+  +taoBaiKiemTra(maBaiHoc: int, baiKiemTra: BaiKiemTra): boolean
+  +xemBaoCaoLoiNhuan(): BaoCao
+  +xuatBanKhoaHoc(maKhoaHoc: int, gia: double): boolean
+  +taiXuatBanKhoaHoc(maKhoaHoc: int): boolean
+}
+
+class QuanTriVien {
+  +quanLyNguoiDung(): boolean
+  +quanLyKhoaHoc(): boolean
+  +quanLyDanhMuc(): boolean
+  +xemBaoCao(): List<BaoCao>
+  +pheGuyetNoiDung(maNoiDung: int): boolean
+  +cauHinhChiaSeLoiNhuan(maGiangVien: int, tyLe: double): boolean
+  +xemBaoCaoLoiNhuanHeThong(): BaoCao
+}
+
+class NguoiDuyetKhoaHoc {
+  +xemXetKhoaHoc(maKhoaHoc: int): boolean
+  +pheGuyetKhoaHoc(maKhoaHoc: int): boolean
+  +cungCapPhanHoi(maKhoaHoc: int, phanHoi: String): boolean
+  +xemXetBaiHoc(maBaiHoc: int): boolean
+}
+
+class KhoaHoc {
+  -id: int
+  -tieuDe: String
+  -moTa: String
+  -gia: double
+  -danhMuc: DanhMuc
+  -maGiangVien: int
+  -xepHang: double
+  -trangThai: TrangThaiKhoaHoc
+  -ngayTao: Date
+  -ngayCapNhat: Date
+  -cacBaiHoc: List<BaiHoc>
+  +layChiTietKhoaHoc(): ChiTietKhoaHoc
+  +layDanhSachBaiHoc(): List<BaiHoc>
+}
+
+class BaiHoc {
+  -id: int
+  -tieuDe: String
+  -moTa: String
+  -maKhoaHoc: int
+  -thuTu: int
+  -thoiLuong: int
+  -trangThai: TrangThaiBaiHoc
+  -taiLieuHocTap: List<TaiLieuHocTap>
+  -baiKiemTra: BaiKiemTra
+  -kieuHoanThanh: KieuHoanThanhBaiHoc
+  -phanTramTaiLieuYeuCau: double
+  +layNoiDung(): List<TaiLieuHocTap>
+  +daHoanThanh(maHocVien: int): boolean
+  +danhDauHoanThanh(maHocVien: int): boolean
+  +layBaiKiemTra(): BaiKiemTra
+  +layTienDoBaiHoc(maHocVien: int): double
+  +kiemTraVaCapNhatTrangThaiHoanThanh(maHocVien: int): boolean
+}
+
+class DanhMuc {
+  -id: int
+  -ten: String
+  -moTa: String
+  -danhMucCha: DanhMuc
+  +layKhoaHoc(): List<KhoaHoc>
+}
+
+class TaiLieuHocTap {
+  -id: int
+  -tieuDe: String
+  -moTa: String
+  -loai: LoaiTaiLieu
+  -noiDung: String
+  -urlTapTin: String
+  -maBaiHoc: int
+  -thuTu: int
+  -thoiGianYeuCau: int
+  -laBatBuoc: boolean
+  +truyCapNoiDung(): String
+  +danhDauDaXem(maHocVien: int): boolean
+  +daXem(maHocVien: int): boolean
+  +layThoiGianXem(maHocVien: int): int
+  +layPhanTramHoanThanh(maHocVien: int): double
+}
+
+class TienDoTaiLieuHocTap {
+  -maHocVien: int
+  -maTaiLieu: int  
+  -daXem: boolean
+  -thoiGianXem: int
+  -ngayTruyCapCuoiCung: Date
+  -phanTramHoanThanh: double
+  +capNhatTienDo(thoiGian: int): void
+  +daHoanThanh(): boolean
+}
+
+class HoatDongHocTap {
+  -id: int
+  -maHocVien: int
+  -maTaiLieu: int
+  -thoiGian: Date
+  -loaiHoatDong: LoaiHoatDong
+  -viTri: int
+  +ghiLaiHoatDong(): boolean
+}
+
+class BaiKiemTra {
+  -id: int
+  -tieuDe: String
+  -moTa: String
+  -maBaiHoc: int
+  -cauHoi: List<CauHoi>
+  -diemQua: int
+  +lamBaiKiemTra(maHocVien: int): boolean
+  +daHoanThanh(maHocVien: int): boolean
+  +layDiem(maHocVien: int): int
+}
+
+class CauHoi {
+  -id: int
+  -noiDung: String
+  -luaChon: List<String>
+  -chiSoLuaChonDung: int
+  -maBaiKiemTra: int
+  +kiemTraCauTraLoi(luaChonDaChon: int): boolean
+}
+
+class TienTrinhKhoaHoc {
+  -maHocVien: int
+  -maKhoaHoc: int
+  -baiHocDaHoanThanh: List<int>
+  -baiKiemTraDaHoanThanh: List<int>
+  -ngayTruyCapCuoiCung: Date
+  -phanTramHoanThanh: double
+  +capNhatTienDo(maBaiHoc: int): void
+  +capNhatTienDoBaiKiemTra(maBaiKiemTra: int, daDat: boolean): void
+  +daHoanThanh(): boolean
+}
+
+class ChungChi {
+  -id: int
+  -maKhoaHoc: int
+  -maHocVien: int
+  -ngayCap: Date
+  -soHieuChungChi: String
+  +phatHanh(): String
+  +xacThuc(): boolean
+}
+
+class ThanhToan {
+  -id: int
+  -maHocVien: int
+  -maKhoaHoc: int
+  -soTien: double
+  -ngayThanhToan: Date
+  -trangThai: TrangThaiThanhToan
+  -maGiaoDich: String
+  -phuongThucThanhToan: String
+  +xuLyThanhToan(): boolean
+  +taoBienLai(): String
+}
+
+class GioHang {
+  -maHocVien: int
+  -cacKhoaHoc: List<KhoaHoc>
+  +themKhoaHoc(maKhoaHoc: int): boolean
+  +xoaKhoaHoc(maKhoaHoc: int): boolean
+  +thanhToan(): ThanhToan
+  +tinhTongTien(): double
+}
+
+class DanhGia {
+  -id: int
+  -maKhoaHoc: int
+  -maHocVien: int
+  -diemDanhGia: int
+  -binhLuan: String
+  -ngay: Date
+  +guiDanhGia(): boolean
+}
+
+class BaoCao {
+  -id: int
+  -loai: LoaiBaoCao
+  -duLieu: Map<String, Object>
+  -ngayTao: Date
+  -kyHan: String
+  +taoBaoCao(): boolean
+  +xuatBaoCao(dinhDang: String): boolean
+}
+
+class GiaoDich {
+  -id: int
+  -maNguoiDung: int
+  -soTien: double
+  -loai: LoaiGiaoDich
+  -ngay: Date
+  -trangThai: TrangThaiGiaoDich
+  -moTa: String
+  +xuLyGiaoDich(): boolean
+}
+
+' Các liệt kê
+enum VaiTroNguoiDung {
+  HOC_VIEN
+  GIANG_VIEN
+  QUAN_TRI_VIEN
+  NGUOI_DUYET_KHOA_HOC
+}
+
+enum TrangThaiKhoaHoc {
+  NHAP
+  CHO_DUYET
+  DA_DUYET
+  DA_XUAT_BAN
+  DA_LUU_TRU
+}
+
+enum TrangThaiBaiHoc {
+  NHAP
+  DA_XUAT_BAN
+  DA_LUU_TRU
+}
+
+enum LoaiTaiLieu {
+  VIDEO
+  TAI_LIEU
+  BAI_KIEM_TRA
+  BAI_TAP
+}
+
+enum TrangThaiThanhToan {
+  CHO_XU_LY
+  HOAN_THANH
+  THAT_BAI
+  HOAN_TIEN
+}
+
+enum LoaiGiaoDich {
+  MUA_KHOA_HOC
+  RUT_LOI_NHUAN
+  PHI_HE_THONG
+}
+
+enum TrangThaiGiaoDich {
+  CHO_XU_LY
+  HOAN_THANH
+  THAT_BAI
+}
+
+enum LoaiBaoCao {
+  BAN_HANG
+  GHI_DANH
+  HOAT_DONG_NGUOI_DUNG
+  HIEU_SUAT_KHOA_HOC
+  CHIA_SE_LOI_NHUAN
+}
+
+enum LoaiHoatDong {
+  BAT_DAU_XEM
+  TAM_DUNG_XEM
+  TIEP_TUC_XEM
+  KET_THUC_XEM
+  MO_TAI_LIEU
+  DONG_TAI_LIEU
+}
+
+enum KieuHoanThanhBaiHoc {
+  DUA_TREN_BAI_KIEM_TRA
+  DUA_TREN_TAI_LIEU
+  CA_HAI
+}
+
+' Mối quan hệ
+NguoiDung <|-- HocVien
+NguoiDung <|-- GiangVien
+NguoiDung <|-- QuanTriVien
+NguoiDung <|-- NguoiDuyetKhoaHoc
+
+HocVien "1" -- "0..*" KhoaHoc : ghi danh >
+GiangVien "1" -- "0..*" KhoaHoc : tạo >
+KhoaHoc "1" -- "0..*" BaiHoc : chứa >
+BaiHoc "1" -- "0..*" TaiLieuHocTap : chứa >
+BaiHoc "1" -- "0..1" BaiKiemTra : có >
+BaiKiemTra "1" -- "1..*" CauHoi : chứa >
+KhoaHoc "*" -- "1" DanhMuc : thuộc về >
+HocVien "1" -- "0..*" TienTrinhKhoaHoc : có >
+KhoaHoc "1" -- "0..*" TienTrinhKhoaHoc : theo dõi >
+HocVien "1" -- "0..1" GioHang : có >
+GioHang "1" -- "0..*" KhoaHoc : chứa >
+GioHang "1" -- "0..*" ThanhToan : tạo ra >
+HocVien "1" -- "0..*" DanhGia : viết >
+KhoaHoc "1" -- "0..*" DanhGia : nhận >
+NguoiDuyetKhoaHoc "1" -- "0..*" KhoaHoc : duyệt >
+HocVien "1" -- "0..*" BaiHoc : học >
+HocVien "1" -- "0..*" ChungChi : nhận >
+KhoaHoc "1" -- "0..*" ChungChi : cấp >
+GiangVien "1" -- "0..*" BaiHoc : tạo >
+NguoiDung "1" -- "0..*" GiaoDich : có >
+HocVien "1" -- "0..*" BaiKiemTra : làm >
+HocVien "1" -- "0..*" TienDoTaiLieuHocTap : có >
+TaiLieuHocTap "1" -- "0..*" TienDoTaiLieuHocTap : theo dõi >
+HocVien "1" -- "0..*" HoatDongHocTap : tạo ra >
+TaiLieuHocTap "1" -- "0..*" HoatDongHocTap : liên quan đến >
+
+@enduml

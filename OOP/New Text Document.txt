@@ -1,0 +1,356 @@
+@startuml "Online Course Platform"
+
+// Main Classes
+class User {
+  -id: int
+  -username: String
+  -password: String
+  -email: String
+  -phoneNumber: String
+  -role: UserRole
+  -balance: double
+  +login(): boolean
+  +logout(): void
+  +register(): boolean
+  +withdrawMoney(amount: double): boolean
+}
+
+class Student {
+  -enrolledCourses: List<Course>
+  +searchCourse(keyword: String): List<Course>
+  +viewCourseDetails(courseId: int): Course
+  +enrollCourse(courseId: int): boolean
+  +viewEnrolledCourses(): List<Course>
+  +accessLearningMaterials(courseId: int): List<LearningMaterial>
+  +submitReview(courseId: int, rating: int, comment: String): boolean
+  +viewProgress(courseId: int): CourseProgress
+  +viewLesson(lessonId: int): Lesson
+  +completeLesson(lessonId: int): boolean
+  +takeQuiz(quizId: int): boolean
+  +getCertificate(courseId: int): Certificate
+}
+
+class Instructor {
+  -createdCourses: List<Course>
+  -profitRate: double
+  +createCourse(course: Course): boolean
+  +updateCourse(courseId: int, course: Course): boolean
+  +uploadLearningMaterial(courseId: int, material: LearningMaterial): boolean
+  +viewStudentProgress(courseId: int): List<CourseProgress>
+  +manageCourseContent(courseId: int): boolean
+  +createLesson(courseId: int, lesson: Lesson): boolean
+  +updateLesson(lessonId: int, lesson: Lesson): boolean
+  +createQuiz(lessonId: int, quiz: Quiz): boolean
+  +viewProfitReport(): Report
+  +publishCourse(courseId: int, price: double): boolean
+  +republishCourse(courseId: int): boolean
+}
+
+class Administrator {
+  +manageUsers(): boolean
+  +manageCourses(): boolean
+  +manageCategories(): boolean
+  +viewReports(): List<Report>
+  +approveContent(contentId: int): boolean
+  +configureProfitSharing(instructorId: int, rate: double): boolean
+  +viewSystemProfitReport(): Report
+}
+
+class CourseReviewer {
+  +reviewCourse(courseId: int): boolean
+  +approveCourse(courseId: int): boolean
+  +provideFeedback(courseId: int, feedback: String): boolean
+  +reviewLesson(lessonId: int): boolean
+}
+
+class Course {
+  -id: int
+  -title: String
+  -description: String
+  -price: double
+  -category: Category
+  -instructorId: int
+  -rating: double
+  -status: CourseStatus
+  -createdDate: Date
+  -updatedDate: Date
+  -lessons: List<Lesson>
+  +getCourseDetails(): CourseDetails
+  +getLessons(): List<Lesson>
+}
+
+class Lesson {
+  -id: int
+  -title: String
+  -description: String
+  -courseId: int
+  -sequence: int
+  -duration: int
+  -status: LessonStatus
+  -learningMaterials: List<LearningMaterial>
+  -quiz: Quiz
+  // New attributes
+  -completionType: LessonCompletionType
+  -requiredMaterialPercentage: double
+  +getContent(): List<LearningMaterial>
+  +isCompleted(studentId: int): boolean
+  +markAsCompleted(studentId: int): boolean
+  +getQuiz(): Quiz
+  // New methods
+  +getMaterialProgress(studentId: int): double
+  +checkAndUpdateCompletionStatus(studentId: int): boolean
+}
+
+class Category {
+  -id: int
+  -name: String
+  -description: String
+  -parentCategory: Category
+  +getCourses(): List<Course>
+}
+
+class LearningMaterial {
+  -id: int
+  -title: String
+  -description: String
+  -type: MaterialType
+  -content: String
+  -fileUrl: String
+  -lessonId: int
+  -sequence: int
+  // New attributes
+  -requiredTimeSpent: int
+  -isRequired: boolean
+  +accessContent(): String
+  // New methods
+  +markAsViewed(studentId: int): boolean
+  +isViewed(studentId: int): boolean
+  +getViewDuration(studentId: int): int
+  +getCompletionPercentage(studentId: int): double
+}
+
+class Quiz {
+  -id: int
+  -title: String
+  -description: String
+  -lessonId: int
+  -questions: List<Question>
+  -passingScore: int
+  +takeQuiz(studentId: int): boolean
+  +isCompleted(studentId: int): boolean
+  +getScore(studentId: int): int
+}
+
+class Question {
+  -id: int
+  -content: String
+  -options: List<String>
+  -correctOptionIndex: int
+  -quizId: int
+  +checkAnswer(selectedOption: int): boolean
+}
+
+class CourseProgress {
+  -studentId: int
+  -courseId: int
+  -completedLessons: List<int>
+  -completedQuizzes: List<int>
+  -lastAccessDate: Date
+  -completionPercentage: double
+  +updateProgress(lessonId: int): void
+  +updateQuizProgress(quizId: int, passed: boolean): void
+  +isCompleted(): boolean
+}
+
+class Certificate {
+  -id: int
+  -courseId: int
+  -studentId: int
+  -issueDate: Date
+  -certificateNumber: String
+  +generate(): String
+  +verify(): boolean
+}
+
+class Payment {
+  -id: int
+  -studentId: int
+  -courseId: int
+  -amount: double
+  -paymentDate: Date
+  -status: PaymentStatus
+  -transactionId: String
+  -paymentMethod: String
+  +processPayment(): boolean
+  +generateReceipt(): String
+}
+
+class Cart {
+  -studentId: int
+  -courseItems: List<Course>
+  +addItem(courseId: int): boolean
+  +removeItem(courseId: int): boolean
+  +checkout(): Payment
+  +getTotal(): double
+}
+
+class Review {
+  -id: int
+  -courseId: int
+  -studentId: int
+  -rating: int
+  -comment: String
+  -date: Date
+  +submitReview(): boolean
+}
+
+class Report {
+  -id: int
+  -type: ReportType
+  -data: Map<String, Object>
+  -generatedDate: Date
+  -period: String
+  +generateReport(): boolean
+  +exportReport(format: String): boolean
+}
+
+class Transaction {
+  -id: int
+  -userId: int
+  -amount: double
+  -type: TransactionType
+  -date: Date
+  -status: TransactionStatus
+  -description: String
+  +processTransaction(): boolean
+}
+
+// New Classes for Learning Activity Tracking
+
+class LearningMaterialProgress {
+  -studentId: int
+  -materialId: int
+  -viewed: boolean
+  -viewDuration: int
+  -lastAccessDate: Date
+  -completionPercentage: double
+  +updateProgress(duration: int): void
+  +isComplete(): boolean
+}
+
+class LearningActivity {
+  -id: int
+  -studentId: int
+  -materialId: int
+  -timestamp: Date
+  -activityType: ActivityType
+  -position: int
+  +recordActivity(): boolean
+}
+
+// New Enumerations
+enum UserRole {
+  STUDENT
+  INSTRUCTOR
+  ADMINISTRATOR
+  COURSE_REVIEWER
+}
+
+enum CourseStatus {
+  DRAFT
+  PENDING_REVIEW
+  APPROVED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum LessonStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum MaterialType {
+  VIDEO
+  DOCUMENT
+  QUIZ
+  ASSIGNMENT
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum TransactionType {
+  COURSE_PURCHASE
+  PROFIT_WITHDRAWAL
+  SYSTEM_FEE
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum ReportType {
+  SALES
+  ENROLLMENT
+  USER_ACTIVITY
+  COURSE_PERFORMANCE
+  PROFIT_SHARING
+}
+
+enum ActivityType {
+  VIEW_START
+  VIEW_PAUSE
+  VIEW_RESUME
+  VIEW_END
+  DOCUMENT_OPEN
+  DOCUMENT_CLOSE
+}
+
+enum LessonCompletionType {
+  QUIZ_BASED
+  MATERIAL_BASED
+  BOTH
+}
+
+// Relationships
+User <|-- Student
+User <|-- Instructor
+User <|-- Administrator
+User <|-- CourseReviewer
+
+Student "1" -- "0..*" Course : enrolls in >
+Instructor "1" -- "0..*" Course : creates >
+Course "1" -- "0..*" Lesson : contains >
+Lesson "1" -- "0..*" LearningMaterial : contains >
+Lesson "1" -- "0..1" Quiz : has >
+Quiz "1" -- "1..*" Question : contains >
+Course "*" -- "1" Category : belongs to >
+Student "1" -- "0..*" CourseProgress : has >
+Course "1" -- "0..*" CourseProgress : tracks >
+Student "1" -- "0..1" Cart : has >
+Cart "1" -- "0..*" Course : contains >
+Cart "1" -- "0..*" Payment : generates >
+Student "1" -- "0..*" Review : writes >
+Course "1" -- "0..*" Review : receives >
+CourseReviewer "1" -- "0..*" Course : reviews >
+Student "1" -- "0..*" Lesson : studies >
+Student "1" -- "0..*" Certificate : earns >
+Course "1" -- "0..*" Certificate : issues >
+Instructor "1" -- "0..*" Lesson : creates >
+User "1" -- "0..*" Transaction : has >
+Student "1" -- "0..*" Quiz : takes >
+
+' New Relationships for Learning Activity Tracking
+Student "1" -- "0..*" LearningMaterialProgress : has >
+LearningMaterial "1" -- "0..*" LearningMaterialProgress : tracks >
+Student "1" -- "0..*" LearningActivity : generates >
+LearningMaterial "1" -- "0..*" LearningActivity : relates to >
+
+@enduml

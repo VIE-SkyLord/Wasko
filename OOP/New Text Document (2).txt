@@ -1,0 +1,101 @@
+Để bổ sung tính năng theo dõi hoạt động học tập của học viên khi bài học không có quiz, tôi sẽ thêm và điều chỉnh các lớp trong UML như sau:
+1. Thêm lớp mới: LearningMaterialProgress
+Copyclass LearningMaterialProgress {
+  -studentId: int
+  -materialId: int  
+  -viewed: boolean
+  -viewDuration: int
+  -lastAccessDate: Date
+  -completionPercentage: double
+  +updateProgress(duration: int): void
+  +isComplete(): boolean
+}
+2. Thêm lớp mới: LearningActivity
+Copyclass LearningActivity {
+  -id: int
+  -studentId: int
+  -materialId: int
+  -timestamp: Date
+  -activityType: ActivityType
+  -position: int
+  +recordActivity(): boolean
+}
+3. Thêm enum mới: ActivityType
+Copyenum ActivityType {
+  VIEW_START
+  VIEW_PAUSE
+  VIEW_RESUME
+  VIEW_END
+  DOCUMENT_OPEN
+  DOCUMENT_CLOSE
+}
+4. Thêm enum mới: LessonCompletionType
+Copyenum LessonCompletionType {
+  QUIZ_BASED
+  MATERIAL_BASED
+  BOTH
+}
+5. Điều chỉnh lớp LearningMaterial
+Copyclass LearningMaterial {
+  // Thuộc tính hiện có giữ nguyên
+  -id: int
+  -title: String
+  -description: String
+  -type: MaterialType
+  -content: String
+  -fileUrl: String
+  -lessonId: int
+  -sequence: int
+  
+  // Thêm thuộc tính mới
+  -requiredTimeSpent: int
+  -isRequired: boolean
+  
+  // Phương thức hiện có giữ nguyên
+  +accessContent(): String
+  
+  // Thêm phương thức mới
+  +markAsViewed(studentId: int): boolean
+  +isViewed(studentId: int): boolean
+  +getViewDuration(studentId: int): int
+  +getCompletionPercentage(studentId: int): double
+}
+6. Điều chỉnh lớp Lesson
+Copyclass Lesson {
+  // Thuộc tính hiện có giữ nguyên
+  -id: int
+  -title: String
+  -description: String
+  -courseId: int
+  -sequence: int
+  -duration: int
+  -status: LessonStatus
+  -learningMaterials: List<LearningMaterial>
+  -quiz: Quiz
+  
+  // Thêm thuộc tính mới
+  -completionType: LessonCompletionType
+  -requiredMaterialPercentage: double
+  
+  // Phương thức hiện có giữ nguyên
+  +getContent(): List<LearningMaterial>
+  +isCompleted(studentId: int): boolean
+  +markAsCompleted(studentId: int): boolean
+  +getQuiz(): Quiz
+  
+  // Thêm phương thức mới
+  +getMaterialProgress(studentId: int): double
+  +checkAndUpdateCompletionStatus(studentId: int): boolean
+}
+7. Thêm mối quan hệ mới
+CopyStudent "1" -- "0..*" LearningMaterialProgress : has >
+LearningMaterial "1" -- "0..*" LearningMaterialProgress : tracks >
+Student "1" -- "0..*" LearningActivity : generates >
+LearningMaterial "1" -- "0..*" LearningActivity : relates to >
+Những bổ sung này sẽ cho phép hệ thống:
+
+Theo dõi chi tiết cách học viên tương tác với tài liệu học tập
+Lưu trữ thời gian và mức độ tương tác với từng tài liệu
+Xác định tiêu chí hoàn thành bài học (dựa vào quiz, tài liệu, hoặc cả hai)
+Tự động tính toán và cập nhật tiến độ học tập dựa trên hoạt động của học viên
+Đánh dấu hoàn thành bài học ngay cả khi không có quiz, miễn là đã đáp ứng yêu cầu về tương tác với tài liệu

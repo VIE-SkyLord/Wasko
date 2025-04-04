@@ -1,0 +1,356 @@
+# Sơ đồ UML: Nền tảng Khóa học Trực tuyến
+
+## Các lớp chính
+
+### Người dùng (User)
+- **Thuộc tính:**
+  - -id: int
+  - -tênNgườiDùng: String
+  - -mậtKhẩu: String
+  - -email: String
+  - -sốĐiệnThoại: String
+  - -vaiTrò: VaiTròNgườiDùng
+  - -sốDư: double
+- **Phương thức:**
+  - +đăngNhập(): boolean
+  - +đăngXuất(): void
+  - +đăngKý(): boolean
+  - +rútTiền(sốTiền: double): boolean
+
+### Học viên (Student)
+- **Thuộc tính:**
+  - -khoáHọcĐãĐăngKý: List<KhoáHọc>
+- **Phương thức:**
+  - +tìmKiếmKhoáHọc(từKhoá: String): List<KhoáHọc>
+  - +xemChiTiếtKhoáHọc(mãKhoáHọc: int): KhoáHọc
+  - +đăngKýKhoáHọc(mãKhoáHọc: int): boolean
+  - +xemKhoáHọcĐãĐăngKý(): List<KhoáHọc>
+  - +truyCậpTàiLiệuHọcTập(mãKhoáHọc: int): List<TàiLiệuHọcTập>
+  - +gửiĐánhGiá(mãKhoáHọc: int, xếpHạng: int, bìnhLuận: String): boolean
+  - +xemTiếnĐộ(mãKhoáHọc: int): TiếnĐộKhoáHọc
+  - +xemBàiHọc(mãBàiHọc: int): BàiHọc
+  - +hoànThànhBàiHọc(mãBàiHọc: int): boolean
+  - +làmBàiKiểmTra(mãBàiKiểmTra: int): boolean
+  - +nhậnChứngChỉ(mãKhoáHọc: int): ChứngChỉ
+
+### Giảng viên (Instructor)
+- **Thuộc tính:**
+  - -khoáHọcĐãTạo: List<KhoáHọc>
+  - -tỷLệLoiNhuận: double
+- **Phương thức:**
+  - +tạoKhoáHọc(khoáHọc: KhoáHọc): boolean
+  - +cậpNhậtKhoáHọc(mãKhoáHọc: int, khoáHọc: KhoáHọc): boolean
+  - +tảiLênTàiLiệuHọcTập(mãKhoáHọc: int, tàiLiệu: TàiLiệuHọcTập): boolean
+  - +xemTiếnĐộHọcViên(mãKhoáHọc: int): List<TiếnĐộKhoáHọc>
+  - +quảnLýNộiDungKhoáHọc(mãKhoáHọc: int): boolean
+  - +tạoBàiHọc(mãKhoáHọc: int, bàiHọc: BàiHọc): boolean
+  - +cậpNhậtBàiHọc(mãBàiHọc: int, bàiHọc: BàiHọc): boolean
+  - +tạoBàiKiểmTra(mãBàiHọc: int, bàiKiểmTra: BàiKiểmTra): boolean
+  - +xemBáoCáoLoiNhuận(): BáoCáo
+  - +xuấtBảnKhoáHọc(mãKhoáHọc: int, giá: double): boolean
+  - +táiXuấtBảnKhoáHọc(mãKhoáHọc: int): boolean
+
+### Quản trị viên (Administrator)
+- **Phương thức:**
+  - +quảnLýNgườiDùng(): boolean
+  - +quảnLýKhoáHọc(): boolean
+  - +quảnLýDanhMục(): boolean
+  - +xemBáoCáo(): List<BáoCáo>
+  - +phêDuyệtNộiDung(mãNộiDung: int): boolean
+  - +cấuHìnhChiaSẻLoiNhuận(mãGiảngViên: int, tỷLệ: double): boolean
+  - +xemBáoCáoLoiNhuậnHệThống(): BáoCáo
+
+### Người đánh giá khóa học (CourseReviewer)
+- **Phương thức:**
+  - +đánhGiáKhoáHọc(mãKhoáHọc: int): boolean
+  - +phêDuyệtKhoáHọc(mãKhoáHọc: int): boolean
+  - +cungCấpPhảnHồi(mãKhoáHọc: int, phảnHồi: String): boolean
+  - +đánhGiáBàiHọc(mãBàiHọc: int): boolean
+
+### Khóa học (Course)
+- **Thuộc tính:**
+  - -id: int
+  - -tiêuĐề: String
+  - -mô tả: String
+  - -giá: double
+  - -danhMục: DanhMục
+  - -mãGiảngViên: int
+  - -xếpHạng: double
+  - -trạngThái: TrạngTháiKhoáHọc
+  - -ngàyTạo: Date
+  - -ngàyCậpNhật: Date
+  - -bàiHọc: List<BàiHọc>
+- **Phương thức:**
+  - +lấyChiTiếtKhoáHọc(): ChiTiếtKhoáHọc
+  - +lấyDanhSáchBàiHọc(): List<BàiHọc>
+
+### Bài học (Lesson)
+- **Thuộc tính:**
+  - -id: int
+  - -tiêuĐề: String
+  - -mô tả: String
+  - -mãKhoáHọc: int
+  - -thứTự: int
+  - -thờiLượng: int
+  - -trạngThái: TrạngTháiBàiHọc
+  - -tàiLiệuHọcTập: List<TàiLiệuHọcTập>
+  - -bàiKiểmTra: BàiKiểmTra
+  - -loạiHoànThành: LoạiHoànThànhBàiHọc
+  - -phầnTrămTàiLiệuYêuCầu: double
+- **Phương thức:**
+  - +lấyNộiDung(): List<TàiLiệuHọcTập>
+  - +đãHoànThành(mãHọcViên: int): boolean
+  - +đánhDấuHoànThành(mãHọcViên: int): boolean
+  - +lấyBàiKiểmTra(): BàiKiểmTra
+  - +lấyTiếnĐộTàiLiệu(mãHọcViên: int): double
+  - +kiểmTraVàCậpNhậtTrạngTháiHoànThành(mãHọcViên: int): boolean
+
+### Danh mục (Category)
+- **Thuộc tính:**
+  - -id: int
+  - -tên: String
+  - -mô tả: String
+  - -danhMụcCha: DanhMục
+- **Phương thức:**
+  - +lấyKhoáHọc(): List<KhoáHọc>
+
+### Tài liệu học tập (LearningMaterial)
+- **Thuộc tính:**
+  - -id: int
+  - -tiêuĐề: String
+  - -mô tả: String
+  - -loại: LoạiTàiLiệu
+  - -nộiDung: String
+  - -urlTệp: String
+  - -mãBàiHọc: int
+  - -thứTự: int
+  - -thờiGianYêuCầu: int
+  - -bắtBuộc: boolean
+- **Phương thức:**
+  - +truyCậpNộiDung(): String
+  - +đánhDấuĐãXem(mãHọcViên: int): boolean
+  - +đãXem(mãHọcViên: int): boolean
+  - +lấyThờiGianXem(mãHọcViên: int): int
+  - +lấyPhầnTrămHoànThành(mãHọcViên: int): double
+
+### Tiến độ tài liệu học tập (LearningMaterialProgress)
+- **Thuộc tính:**
+  - -mãHọcViên: int
+  - -mãTàiLiệu: int 
+  - -đãXem: boolean
+  - -thờiLượngXem: int
+  - -ngàyTruyCậpCuốiCùng: Date
+  - -phầnTrămHoànThành: double
+- **Phương thức:**
+  - +cậpNhậtTiếnĐộ(thờiLượng: int): void
+  - +đãHoànThành(): boolean
+
+### Hoạt động học tập (LearningActivity)
+- **Thuộc tính:**
+  - -id: int
+  - -mãHọcViên: int
+  - -mãTàiLiệu: int
+  - -thờiGian: Date
+  - -loạiHoạtĐộng: LoạiHoạtĐộng
+  - -vịTrí: int
+- **Phương thức:**
+  - +ghiLạiHoạtĐộng(): boolean
+
+### Bài kiểm tra (Quiz)
+- **Thuộc tính:**
+  - -id: int
+  - -tiêuĐề: String
+  - -mô tả: String
+  - -mãBàiHọc: int
+  - -câuHỏi: List<CâuHỏi>
+  - -điểmĐạt: int
+- **Phương thức:**
+  - +làmBàiKiểmTra(mãHọcViên: int): boolean
+  - +đãHoànThành(mãHọcViên: int): boolean
+  - +lấyĐiểm(mãHọcViên: int): int
+
+### Câu hỏi (Question)
+- **Thuộc tính:**
+  - -id: int
+  - -nộiDung: String
+  - -lựaChọn: List<String>
+  - -chỉSốLựaChọnĐúng: int
+  - -mãBàiKiểmTra: int
+- **Phương thức:**
+  - +kiểmTraCâuTrảLời(lựaChọnĐãChọn: int): boolean
+
+### Tiến độ khóa học (CourseProgress)
+- **Thuộc tính:**
+  - -mãHọcViên: int
+  - -mãKhoáHọc: int
+  - -bàiHọcĐãHoànThành: List<int>
+  - -bàiKiểmTraĐãHoànThành: List<int>
+  - -ngàyTruyCậpCuốiCùng: Date
+  - -phầnTrămHoànThành: double
+- **Phương thức:**
+  - +cậpNhậtTiếnĐộ(mãBàiHọc: int): void
+  - +cậpNhậtTiếnĐộBàiKiểmTra(mãBàiKiểmTra: int, đãĐạt: boolean): void
+  - +đãHoànThành(): boolean
+
+### Chứng chỉ (Certificate)
+- **Thuộc tính:**
+  - -id: int
+  - -mãKhoáHọc: int
+  - -mãHọcViên: int
+  - -ngàyCấp: Date
+  - -sốChứngChỉ: String
+- **Phương thức:**
+  - +tạoChứngChỉ(): String
+  - +xácThực(): boolean
+
+### Thanh toán (Payment)
+- **Thuộc tính:**
+  - -id: int
+  - -mãHọcViên: int
+  - -mãKhoáHọc: int
+  - -sốTiền: double
+  - -ngàyThanhToán: Date
+  - -trạngThái: TrạngTháiThanhToán
+  - -mãGiaoDịch: String
+  - -phươngThứcThanhToán: String
+- **Phương thức:**
+  - +xửLýThanhToán(): boolean
+  - +tạoHóaĐơn(): String
+
+### Giỏ hàng (Cart)
+- **Thuộc tính:**
+  - -mãHọcViên: int
+  - -khoáHọcTrongGiỏ: List<KhoáHọc>
+- **Phương thức:**
+  - +thêmMục(mãKhoáHọc: int): boolean
+  - +xóaMục(mãKhoáHọc: int): boolean
+  - +thanhToán(): ThanhToán
+  - +tínhTổng(): double
+
+### Đánh giá (Review)
+- **Thuộc tính:**
+  - -id: int
+  - -mãKhoáHọc: int
+  - -mãHọcViên: int
+  - -xếpHạng: int
+  - -bìnhLuận: String
+  - -ngày: Date
+- **Phương thức:**
+  - +gửiĐánhGiá(): boolean
+
+### Báo cáo (Report)
+- **Thuộc tính:**
+  - -id: int
+  - -loại: LoạiBáoCáo
+  - -dữLiệu: Map<String, Object>
+  - -ngàyTạo: Date
+  - -kỳHạn: String
+- **Phương thức:**
+  - +tạoBáoCáo(): boolean
+  - +xuấtBáoCáo(định dạng: String): boolean
+
+### Giao dịch (Transaction)
+- **Thuộc tính:**
+  - -id: int
+  - -mãNgườiDùng: int
+  - -sốTiền: double
+  - -loại: LoạiGiaoDịch
+  - -ngày: Date
+  - -trạngThái: TrạngTháiGiaoDịch
+  - -mô tả: String
+- **Phương thức:**
+  - +xửLýGiaoDịch(): boolean
+
+## Các kiểu liệt kê
+
+### Vai trò người dùng (UserRole)
+- HỌC_VIÊN
+- GIẢNG_VIÊN
+- QUẢN_TRỊ_VIÊN
+- NGƯỜI_ĐÁNH_GIÁ_KHÓA_HỌC
+
+### Trạng thái khóa học (CourseStatus)
+- BẢN_NHÁP
+- ĐANG_CHỜ_DUYỆT
+- ĐÃ_DUYỆT
+- ĐÃ_XUẤT_BẢN
+- ĐÃ_LƯU_TRỮ
+
+### Trạng thái bài học (LessonStatus)
+- BẢN_NHÁP
+- ĐÃ_XUẤT_BẢN
+- ĐÃ_LƯU_TRỮ
+
+### Loại tài liệu (MaterialType)
+- VIDEO
+- TÀI_LIỆU
+- BÀI_KIỂM_TRA
+- BÀI_TẬP
+
+### Trạng thái thanh toán (PaymentStatus)
+- ĐANG_CHỜ
+- ĐÃ_HOÀN_THÀNH
+- THẤT_BẠI
+- ĐÃ_HOÀN_TIỀN
+
+### Loại giao dịch (TransactionType)
+- MUA_KHÓA_HỌC
+- RÚT_LỢI_NHUẬN
+- PHÍ_HỆ_THỐNG
+
+### Trạng thái giao dịch (TransactionStatus)
+- ĐANG_CHỜ
+- ĐÃ_HOÀN_THÀNH
+- THẤT_BẠI
+
+### Loại báo cáo (ReportType)
+- BÁN_HÀNG
+- ĐĂNG_KÝ
+- HOẠT_ĐỘNG_NGƯỜI_DÙNG
+- HIỆU_SUẤT_KHÓA_HỌC
+- CHIA_SẺ_LỢI_NHUẬN
+
+### Loại hoạt động (ActivityType)
+- BẮT_ĐẦU_XEM
+- TẠM_DỪNG_XEM
+- TIẾP_TỤC_XEM
+- KẾT_THÚC_XEM
+- MỞ_TÀI_LIỆU
+- ĐÓNG_TÀI_LIỆU
+
+### Loại hoàn thành bài học (LessonCompletionType)
+- DỰA_TRÊN_BÀI_KIỂM_TRA
+- DỰA_TRÊN_TÀI_LIỆU
+- CẢ_HAI
+
+## Mối quan hệ
+- NgườiDùng <|-- HọcViên
+- NgườiDùng <|-- GiảngViên 
+- NgườiDùng <|-- QuảnTrịViên
+- NgườiDùng <|-- NgườiĐánhGiáKhóaHọc
+
+- HọcViên "1" -- "0..*" KhoáHọc : đăng ký >
+- GiảngViên "1" -- "0..*" KhoáHọc : tạo >
+- KhoáHọc "1" -- "0..*" BàiHọc : chứa >
+- BàiHọc "1" -- "0..*" TàiLiệuHọcTập : chứa >
+- BàiHọc "1" -- "0..1" BàiKiểmTra : có >
+- BàiKiểmTra "1" -- "1..*" CâuHỏi : chứa >
+- KhoáHọc "*" -- "1" DanhMục : thuộc về >
+- HọcViên "1" -- "0..*" TiếnĐộKhoáHọc : có >
+- KhoáHọc "1" -- "0..*" TiếnĐộKhoáHọc : theo dõi >
+- HọcViên "1" -- "0..1" GiỏHàng : có >
+- GiỏHàng "1" -- "0..*" KhoáHọc : chứa >
+- GiỏHàng "1" -- "0..*" ThanhToán : tạo >
+- HọcViên "1" -- "0..*" ĐánhGiá : viết >
+- KhoáHọc "1" -- "0..*" ĐánhGiá : nhận >
+- NgườiĐánhGiáKhóaHọc "1" -- "0..*" KhoáHọc : đánh giá >
+- HọcViên "1" -- "0..*" BàiHọc : học >
+- HọcViên "1" -- "0..*" ChứngChỉ : nhận >
+- KhoáHọc "1" -- "0..*" ChứngChỉ : cấp >
+- GiảngViên "1" -- "0..*" BàiHọc : tạo >
+- NgườiDùng "1" -- "0..*" GiaoDịch : có >
+- HọcViên "1" -- "0..*" BàiKiểmTra : làm >
+- HọcViên "1" -- "0..*" TiếnĐộTàiLiệuHọcTập : có >
+- TàiLiệuHọcTập "1" -- "0..*" TiếnĐộTàiLiệuHọcTập : theo dõi >
+- HọcViên "1" -- "0..*" HoạtĐộngHọcTập : tạo >
+- TàiLiệuHọcTập "1" -- "0..*" HoạtĐộngHọcTập : liên quan đến >
