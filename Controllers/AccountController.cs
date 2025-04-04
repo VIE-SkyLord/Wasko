@@ -8,16 +8,22 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Wasko.Data;
 
 public class AccountController : Controller
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly ApplicationDbContext _context;
 
-    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+    public AccountController(
+        UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager,
+        ApplicationDbContext context)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _context = context;
     }
 
     // Đăng ký
@@ -254,4 +260,52 @@ public class AccountController : Controller
         var claims = User.Claims.Select(c => $"{c.Type}: {c.Value}").ToList();
         return Content(string.Join("\n", claims));
     }
+    [Authorize(Roles = "Giảng viên")]
+    public async Task<IActionResult> ThongBao()
+    {
+        var thongBao = await _context.ThongBao
+            .Where(tb => tb.NguoiNhanRole == "Giảng viên")
+            .OrderByDescending(tb => tb.ThoiGian)
+            .ToListAsync();
+
+        // Đánh dấu tất cả thông báo là đã đọc
+        foreach (var tb in thongBao.Where(t => !t.DaDoc))
+        {
+            tb.DaDoc = true;
+        }
+        await _context.SaveChangesAsync();
+
+        return View(thongBao);
+    }
+    
+    [Authorize(Roles = "Giảng viên")]
+    public async Task<IActionResult> XoaThongBao(int id)
+    {
+        var thongBao = await _context.ThongBao.FindAsync(id);
+        if (thongBao == null)
+        {
+            return NotFound();
+        }
+
+        _context.ThongBao.Remove(thongBao);
+        await _context.SaveChangesAsync();
+        
+        TempData["SuccessMessage"] = "Đã xóa thông báo thành công!";
+        return RedirectToAction(nameof(ThongBao));
+    }
+    
+    [Authorize(Roles = "Giảng viên")]
+    public async Task<IActionResult> XoaTatCaThongBao()
+    {
+        var thongBao = await _context.ThongBao
+            .Where(tb => tb.NguoiNhanRole == "Giảng viên")
+            .ToListAsync();
+            
+        _context.ThongBao.RemoveRange(thongBao);
+        await _context.SaveChangesAsync();
+        
+        TempData["SuccessMessage"] = "Đã xóa tất cả thông báo thành công!";
+        return RedirectToAction(nameof(ThongBao));
+    }
+
 }

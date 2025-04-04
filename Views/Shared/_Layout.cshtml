@@ -1,4 +1,5 @@
 ﻿@using System.Security.Claims
+@inject Wasko.Data.ApplicationDbContext Context
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Wasko</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -33,12 +35,46 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Role" asp-action="Index">Quản lý người dùng</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Topic" asp-action="Index">Quản lý chủ đề</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Giảng viên"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Course" asp-action="InstructorCourseList">Khóa học Đã tạo</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Kiểm duyệt viên"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Course" asp-action="InstructorCourseList">Khóa học chờ duyệt</a>
+                            </li>
                         }
                     </ul>
 
                     @if (User.Identity?.IsAuthenticated == true)
                     {
                         <ul class="navbar-nav">
+                            @if (User.IsInRole("Giảng viên"))
+                            {
+                                @* Đếm số thông báo chưa đọc cho giảng viên *@
+                                var unreadNotificationCount = Context.ThongBao
+                                    .Count(n => n.NguoiNhanRole == "Giảng viên");
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link position-relative" asp-controller="Account" asp-action="ThongBao">
+                                        <i class="bi bi-bell-fill"></i>
+                                        @if (unreadNotificationCount > 0)
+                                        {
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                @unreadNotificationCount
+                                                <span class="visually-hidden">thông báo chưa đọc</span>
+                                            </span>
+                                        }
+                                    </a>
+                                </li>
+                            }
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="badge bg-primary me-2">
@@ -78,6 +114,32 @@
     <script>
         $(document).ready(function () {
             $('.dropdown-toggle').dropdown();
+            
+            // Toast notification for success messages
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <text>
+                Swal.fire({
+                    title: "Thành công!",
+                    text: "@TempData["SuccessMessage"]",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                });
+                </text>
+            }
+            
+            // Toast notification for error messages
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <text>
+                Swal.fire({
+                    title: "Lỗi!",
+                    text: "@TempData["ErrorMessage"]",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+                </text>
+            }
         });
     </script>
     @RenderSection("Scripts", required: false)
