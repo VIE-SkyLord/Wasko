@@ -1,0 +1,50 @@
+@model ManageUserRolesViewModel
+
+@{
+    ViewData["Title"] = "Quản lý vai trò người dùng";
+}
+
+<div class="container mt-4">
+    <h2>Quản lý vai trò người dùng</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="mb-3">
+        <h4>@Model.UserName</h4>
+        <p>Email: @Model.Email</p>
+        <p>Số điện thoại: @Model.PhoneNumber</p>
+    </div>
+
+    <div class="mb-3">
+        <h5>Vai trò hiện tại:</h5>
+        @if (Model.RolesList.Any())
+        {
+            <ul>
+                @foreach (var role in Model.RolesList)
+                {
+                    <li>@role.RoleName</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>Chưa có vai trò</p>
+        }
+    </div>
+
+    <a href="@Url.Action("Index", "Role")" class="btn btn-secondary">Quay lại</a>
+</div>

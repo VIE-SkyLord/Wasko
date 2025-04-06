@@ -1,0 +1,32 @@
+@model IEnumerable<ThongBao>
+
+@{
+    ViewData["Title"] = "Thông báo";
+}
+
+<div class="container">
+    <h1 class="mb-4">Thông báo hệ thống</h1>
+    
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle me-2"></i> Chưa có thông báo nào.
+        </div>
+    }
+    else
+    {
+        <div class="list-group">
+            @foreach (var item in Model)
+            {
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Thông báo</h5>
+                        <small>@item.ThoiGian.ToString("dd/MM/yyyy HH:mm")</small>
+                    </div>
+                    <p class="mb-1">@item.NoiDung</p>
+                    <small class="text-muted">Gửi đến: @item.NguoiNhanRole</small>
+                </div>
+            }
+        </div>
+    }
+</div>
