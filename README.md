@@ -122,5 +122,3 @@
 - Gửi thông báo đến tài khoản bị khóa qua email.
 
 ---
-
-> 📄 *Tài liệu này mô tả tổng quan các quy trình và nghiệp vụ chính trong hệ thống bán khóa học online. Tùy vào thực tế phát triển và triển khai, các quy trình có thể được điều chỉnh linh hoạt.*
